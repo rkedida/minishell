@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:14:22 by rkedida           #+#    #+#             */
-/*   Updated: 2022/08/13 14:56:19 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/08/13 22:11:25 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,58 @@
 	
 // }
 
+int	check_qoutes(char *str, char opening_quote, int i)
+{	
+	while (str[i])
+	{
+		if (str[i] == opening_quote)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+// write a function that read byte by byte from the command line
+
+void	parser(char *line)
+{
+	int	i;
+	int	j;
+	int	quote_opened;
+
+	i = 0;
+	j = 0;
+	quote_opened = 0;
+	while (line[i])
+	{
+		if (line[i] && line[i] == '\'')
+		{
+			i++;
+			if (check_qoutes(line, '\'', i) == 0 && !quote_opened)
+			{
+				printf("minishell : : command not found\n");
+				break ;
+			}
+			quote_opened = 1;
+		}
+		if (line[i] && line[i] == '\"')
+		{
+			i++;
+			if (check_qoutes(line, '\"', i) == 0 && !quote_opened)
+			{
+				printf("minishell : : command not found\n");
+				break ;
+			}
+			quote_opened = 1;
+		}
+		i++;
+	}
+}
 
 void	prompt(int ac, char **av, char **envp)
 {
 	int		i;
 	char	*s;
-	char **tab;
-	char *tmp;
 
 	s = NULL;
 	i = 0;
@@ -39,30 +84,17 @@ void	prompt(int ac, char **av, char **envp)
 		s = readline("BALU > ");
 		if (ft_strlen(s) > 0)
 			add_history(s);
-		tab = (char **)malloc(sizeof(char *) * (ft_strlen(s) + 1));
-		if (!tab)
-			return ;
-		while (i < ac)
-		{
-			tmp = s;
-			tab = ft_split(tmp, ' ');
-			tmp = tab[i];
-			// printf("%s\n", s);
-			printf("%s\n", tmp);
-			printf("%s\n", tab[i]);
-			i++;
-		}
-		// printf("%s\n", tab[i]);
-		// i++;
+		parser(s);
 		if (strcmp(s, ";") == 0)
-				{printf("fuck you\n");
-				break;}
+		{
+			printf("fuck you\n");
+			break ;
+		}
 		// parsing(ac, av, envp);
 		if (strcmp(s, "exit") == 0)
 			break ;
 	}
 }
-
 
 // int main(void)
 int main(int ac, char **av, char **envp)
