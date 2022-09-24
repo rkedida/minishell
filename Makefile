@@ -6,19 +6,19 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/08/12 21:42:26 by rkedida          ###   ########.fr        #
+#    Updated: 2022/09/24 22:15:19 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-CFLAGS				=
+CFLAGS				= -g
 HEADERS				= -I ./includes
 OBJ_DIR				= ./obj/
 LIBFT				= ./libft/libft.a
 
 SRC_DIR				= ./src/
-SRCS_FILES			= main.c
+SRCS_FILES			= main.c tokenizer.c tokenizer_utils.c
 SRC					= $(addprefix $(SRC_DIR), $(SRCS_FILES))
 
 OBJS_FILES			= $(addprefix $(OBJ_DIR), $(SRCS_FILES))

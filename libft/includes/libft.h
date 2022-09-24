@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 12:11:35 by rkedida           #+#    #+#             */
-/*   Updated: 2022/04/01 23:13:55 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/09/24 22:20:46 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *str1, const void *str2, size_t n);
 void		*ft_memset(void *dest, int c, size_t count);
 char		*ft_strchr(const char *s, int c);
+int			ft_strchr_pos(const char *s, int c);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
 size_t		ft_strlen(const char *str);

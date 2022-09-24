@@ -1,36 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/12 12:36:04 by rkedida           #+#    #+#             */
-/*   Updated: 2022/09/24 22:19:51 by rkedida          ###   ########.fr       */
+/*   Created: 2022/09/24 22:07:05 by rkedida           #+#    #+#             */
+/*   Updated: 2022/09/24 22:07:06 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include "../libft/includes/libft.h"
-#include "lexical_analyzer.h"
-
-
-typedef struct s_data
-{
-	t_token		*tokens;
-	int			state;
-	int			exit_state;
-	
-}				t_data;
-
-t_data	*data(void);
-
-#endif
