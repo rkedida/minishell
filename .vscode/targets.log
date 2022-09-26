@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Thu Sep 22 01:35:17 2022
+# Make data base, printed on Mon Sep 26 15:54:50 2022
 
 # Variables
 
@@ -18,7 +18,6 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 ?F = $(notdir $?)
 # makefile (from `Makefile', line 22)
 SRC = $(addprefix $(SRC_DIR), $(SRCS_FILES))
- 
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -52,17 +51,15 @@ BOLD = \033[1m
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = 9255BB84-A4E1-4790-A778-E26ED940605C
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.FCDXj88C8u/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.tXoUEbiPKO/Listeners
 # automatic
 %F = $(notdir $%)
 # makefile (from `Makefile', line 21)
-SRCS_FILES = main.c
+SRCS_FILES = main.c tokenizer.c tokenizer_utils.c
 # environment
 PWD = /Users/rkedida/Documents/minishell
 # environment
@@ -136,7 +133,7 @@ MFLAGS = -Rrqp
 # makefile (from `Makefile', line 28)
 BLACK = \033[30;1m
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000006.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.2744
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile (from `Makefile', line 31)
@@ -147,8 +144,6 @@ CYAN = \033[36;1m
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x18CB1:0x0:0x3
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # makefile (from `Makefile', line 20)
@@ -163,8 +158,6 @@ PAGER = less
 LC_ALL = C
 # makefile (from `Makefile', line 36)
 RESET = \033[0m
-# environment
-SECURITYSESSIONID = 186bd
 # automatic
 ^F = $(notdir $^)
 # default
@@ -178,9 +171,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 51475
+VSCODE_PID = 91168
 # variable set hash-table stats:
-# Load=83/1024=8%, Rehash=0, Collisions=4/119=3%
+# Load=80/1024=8%, Rehash=0, Collisions=4/116=3%
 
 # Pattern-specific Variable Values
 
@@ -189,10 +182,10 @@ VSCODE_PID = 51475
 # Directories
 
 # . (device 16777225, inode 2168005): 11 files, no impossibilities.
-# ./src (device 16777225, inode 2168121): 3 files, no impossibilities so far.
-# src (device 16777225, inode 2168121): 3 files, no impossibilities so far.
+# ./src (device 16777225, inode 2168121): 7 files, no impossibilities so far.
+# src (device 16777225, inode 2168121): 7 files, no impossibilities so far.
 
-# 17 files, no impossibilities in 3 directories.
+# 25 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -215,6 +208,15 @@ all,:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+
+# Not a target:
+src/tokenizer.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-24 22:10:01
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 all: minishell
 #  Command-line target.
@@ -249,7 +251,7 @@ git:
 obj/main.o: src/main.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-09-22 01:35:02
+#  Last modified 2022-09-24 23:35:42
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -267,7 +269,7 @@ obj/main.o: src/main.c
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-22 01:34:57
+#  Last modified 2022-09-24 22:15:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -279,9 +281,9 @@ fclean,:
 #  File does not exist.
 #  File has not been updated.
 
-minishell: obj/ obj/main.o
+minishell: obj/ obj/main.o obj/tokenizer.o obj/tokenizer_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-09-22 01:35:05
+#  Last modified 2022-09-24 23:35:44
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -297,6 +299,19 @@ libmlx,:
 #  File does not exist.
 #  File has not been updated.
 
+obj/tokenizer_utils.o: src/tokenizer_utils.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `tokenizer_utils'
+#  Last modified 2022-09-24 23:35:42
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+ 
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 46):
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
+	
+
 fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -309,7 +324,7 @@ fclean: clean
 
 obj/:
 #  Implicit rule search has not been done.
-#  Last modified 2022-09-22 01:35:02
+#  Last modified 2022-09-24 23:35:42
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 43):
@@ -319,11 +334,10 @@ obj/:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-22 01:33:39
+#  Last modified 2022-09-24 23:35:40
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 norm:
@@ -367,8 +381,29 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	
 
+# Not a target:
+src/tokenizer_utils.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-24 22:14:45
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+obj/tokenizer.o: src/tokenizer.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `tokenizer'
+#  Last modified 2022-09-24 23:35:42
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 46):
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
+	
+
 # files hash-table stats:
-# Load=20/1024=2%, Rehash=0, Collisions=0/48=0%
+# Load=24/1024=2%, Rehash=0, Collisions=0/60=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -380,6 +415,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Sep 22 01:35:17 2022
+# Finished Make data base on Mon Sep 26 15:54:50 2022
 
  
