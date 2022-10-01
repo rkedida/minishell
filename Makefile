@@ -6,7 +6,7 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/10/01 22:03:36 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/01 22:05:04 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS 	= $(shell find ./includes -name "*.h")
 LIBFT		= ./libft/libft.a
 
 OBJECTS 	= $(patsubst %.c, %.o, $(SOURCES))
-DEPENDS 	= $(patsubst %.c, %.d, $(SOURCES))
+# DEPENDS 	= $(patsubst %.c, %.d, $(SOURCES))
 
 CFLAGS 		= -g
 RLFLAGS 	= -lreadline
@@ -26,8 +26,9 @@ RLFLAGS 	= -lreadline
 all: $(NAME)
 
 %.o: %.c
-	@$(CC) -Iincludes $(CFLAGS) -MMD -MP -c $< -o $@
-
+# @$(CC) -Iincludes $(CFLAGS) -MMD -MP -c $< -o $@
+	@$(CC) -Iincludes $(CFLAGS) -c $< -o $@
+	
 $(NAME): $(OBJECTS)
 	@make -C ./libft --silent
 	@echo "Dependencies Compiled !"
@@ -58,4 +59,4 @@ re: clean all
 
 .PHONY: re run fclean clean all
 
--include $(DEPENDS)
+# -include $(DEPENDS)
