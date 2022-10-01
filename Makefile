@@ -6,7 +6,7 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/10/01 22:05:04 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/01 22:21:08 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ $(NAME): $(OBJECTS)
 	@echo "Compiled !"
 
 clean:
+	@make fclean -C ./libft --silent
 	-@$(RM) $(OBJECTS) $(DEPENDS)
 	-@$(RM) $(OBJECTS)
 	@echo "Everything is Cleaned !"
