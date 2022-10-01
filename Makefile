@@ -6,7 +6,7 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/10/01 22:03:15 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/01 22:03:36 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ test:
 
 git:
 	@git add .
-	@git commit -m "Update!"
+	-@git commit -m "Update!"
 	@git push
 	@echo "Commited!"
 
