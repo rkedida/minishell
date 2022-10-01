@@ -8,7 +8,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Sep 26 15:54:50 2022
+# Make data base, printed on Sat Oct  1 12:29:57 2022
+ 
 
 # Variables
 
@@ -45,17 +46,17 @@ OBJS = $(OBJS_FILES:.c=.o)
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/goinfre/.brew/bin:/Users/rkedida/Library/Python/3.9/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin
+PATH = /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 # makefile (from `Makefile', line 27)
 BOLD = \033[1m
 # environment
-LSCOLORS = Gxfxcxdxbxegedabagacad
+LaunchInstanceID = FA9246F9-EFEB-4275-9562-A0298ACC8785
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.tXoUEbiPKO/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.jOaaQymXAd/Listeners
 # automatic
 %F = $(notdir $%)
 # makefile (from `Makefile', line 21)
@@ -77,11 +78,9 @@ VSCODE_CODE_CACHE_PATH = /Users/rkedida/Library/Application Support/Code/CachedD
 # environment
 LOGNAME = rkedida
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from `Makefile', line 16)
 HEADERS = -I ./includes
-# environment
-ZSH = /Users/rkedida/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -106,8 +105,6 @@ USER = rkedida
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 13)
 NAME = minishell
-# environment
-LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
@@ -133,7 +130,7 @@ MFLAGS = -Rrqp
 # makefile (from `Makefile', line 28)
 BLACK = \033[30;1m
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.2744
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile (from `Makefile', line 31)
@@ -144,6 +141,8 @@ CYAN = \033[36;1m
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x18CB1:0x0:0x3
+# environment
+COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # makefile (from `Makefile', line 20)
@@ -153,11 +152,11 @@ SRC_DIR = ./src/
 # makefile (from `Makefile', line 24)
 OBJS_FILES = $(addprefix $(OBJ_DIR), $(SRCS_FILES))
 # environment
-PAGER = less
-# environment
 LC_ALL = C
 # makefile (from `Makefile', line 36)
 RESET = \033[0m
+# environment
+SECURITYSESSIONID = 186a7
 # automatic
 ^F = $(notdir $^)
 # default
@@ -171,9 +170,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 91168
+VSCODE_PID = 81237
 # variable set hash-table stats:
-# Load=80/1024=8%, Rehash=0, Collisions=4/116=3%
+# Load=79/1024=8%, Rehash=0, Collisions=4/118=3%
 
 # Pattern-specific Variable Values
 
@@ -181,11 +180,10 @@ VSCODE_PID = 91168
 
 # Directories
 
-# . (device 16777225, inode 2168005): 11 files, no impossibilities.
-# ./src (device 16777225, inode 2168121): 7 files, no impossibilities so far.
-# src (device 16777225, inode 2168121): 7 files, no impossibilities so far.
+# . (device 16777225, inode 2168005): 9 files, no impossibilities.
+# ./src (device 16777225, inode 2168121): No files, no impossibilities so far.
 
-# 25 files, no impossibilities in 3 directories.
+# 9 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -209,23 +207,14 @@ all,:
 #  File does not exist.
 #  File has not been updated.
 
-# Not a target:
-src/tokenizer.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-09-24 22:10:01
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
 all: minishell
 #  Command-line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
 .PHONY: all, clean, fclean, re, libmlx, libft
 #  Implicit rule search has not been done.
@@ -248,17 +237,11 @@ git:
 	git push
 	
 
-obj/main.o: src/main.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `main'
-#  Last modified 2022-09-24 23:35:42
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 46):
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
-	
+# Not a target:
+obj/main.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .SUFFIXES:
@@ -281,13 +264,13 @@ fclean,:
 #  File does not exist.
 #  File has not been updated.
 
-minishell: obj/ obj/main.o obj/tokenizer.o obj/tokenizer_utils.o
+minishell: obj obj/main.o obj/tokenizer.o obj/tokenizer_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-09-24 23:35:44
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 #  commands to execute (from `Makefile', line 52):
 	@make -C ./libft --silent
 	@$(CC) -lreadline $(HEADERS) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
@@ -299,18 +282,11 @@ libmlx,:
 #  File does not exist.
 #  File has not been updated.
 
-obj/tokenizer_utils.o: src/tokenizer_utils.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `tokenizer_utils'
-#  Last modified 2022-09-24 23:35:42
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
- 
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 46):
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
-	
+# Not a target:
+obj/tokenizer_utils.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 fclean: clean
 #  Implicit rule search has not been done.
@@ -322,23 +298,33 @@ fclean: clean
 	@rm -f $(BONUS)
 	
 
-obj/:
+obj:
 #  Implicit rule search has not been done.
-#  Last modified 2022-09-24 23:35:42
+#  Implicit/static pattern stem: `'
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := obj
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  commands to execute (from `Makefile', line 43):
 	@mkdir -p $(OBJ_DIR)
 	
-
-# Not a target:
-src/main.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-09-24 23:35:40
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 norm:
 #  Implicit rule search has not been done.
@@ -355,6 +341,7 @@ norm:
 #  File has not been updated.
 
 re,:
+ 
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -382,28 +369,13 @@ clean:
 	
 
 # Not a target:
-src/tokenizer_utils.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-09-24 22:14:45
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-obj/tokenizer.o: src/tokenizer.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `tokenizer'
-#  Last modified 2022-09-24 23:35:42
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 46):
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
-	
+obj/tokenizer.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=24/1024=2%, Rehash=0, Collisions=0/60=0%
+# Load=21/1024=2%, Rehash=0, Collisions=0/49=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -415,6 +387,6 @@ obj/tokenizer.o: src/tokenizer.c
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Sep 26 15:54:50 2022
+# Finished Make data base on Sat Oct  1 12:29:57 2022
 
  

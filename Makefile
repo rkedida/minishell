@@ -6,70 +6,56 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/09/24 22:15:19 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/01 22:03:15 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= minishell
+NAME 		= minishell
 
-CFLAGS				= -g
-HEADERS				= -I ./includes
-OBJ_DIR				= ./obj/
-LIBFT				= ./libft/libft.a
+SOURCES 	= $(shell find ./src -name "*.c")
+HEADERS 	= $(shell find ./includes -name "*.h")
 
-SRC_DIR				= ./src/
-SRCS_FILES			= main.c tokenizer.c tokenizer_utils.c
-SRC					= $(addprefix $(SRC_DIR), $(SRCS_FILES))
+LIBFT		= ./libft/libft.a
 
-OBJS_FILES			= $(addprefix $(OBJ_DIR), $(SRCS_FILES))
-OBJS	 			= $(OBJS_FILES:.c=.o)
+OBJECTS 	= $(patsubst %.c, %.o, $(SOURCES))
+DEPENDS 	= $(patsubst %.c, %.d, $(SOURCES))
 
-BOLD	= \033[1m
-BLACK	= \033[30;1m
-RED	= \033[31;1m
-GREEN	= \033[32;1m
-YELLOW	= \033[33;1m
-BLUE	= \033[34;1m
-MAGENTA	= \033[35;1m
-CYAN	= \033[36;1m
-WHITE	= \033[37;1m
-RESET	= \033[0m
-
-# //= Recipes =//
+CFLAGS 		= -g
+RLFLAGS 	= -lreadline
 
 all: $(NAME)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+%.o: %.c
+	@$(CC) -Iincludes $(CFLAGS) -MMD -MP -c $< -o $@
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
-
-$(OBJ_DIR)%.o : $(BONUS_DIR)%.c
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
-
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJECTS)
 	@make -C ./libft --silent
-	@$(CC) -lreadline $(HEADERS) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
-
-norm: 
-	@norminette
-
-git:
-	git add .
-	git commit -m "Update"
-	git push
+	@echo "Dependencies Compiled !"
+	@$(CC) $(CFLAGS) $(RLFLAGS) $(LIBFT) -Iincludes $(OBJECTS) -o $(NAME)
+	@echo "Compiled !"
 
 clean:
-	@make clean -C ./libft --silent
-	@rm -f $(OBJS)
-	@rm -rf $(OBJ_DIR)
+	-@$(RM) $(OBJECTS) $(DEPENDS)
+	-@$(RM) $(OBJECTS)
+	@echo "Everything is Cleaned !"
 
 fclean: clean
-	@make fclean -C ./libft --silent
-	@rm -f $(NAME)
-	@rm -f $(BONUS)
+	-@$(RM) $(NAME)
+
+test:
+	@$(shell ./esh_tester.sh)
+
+git:
+	@git add .
+	@git commit -m "Update!"
+	@git push
+	@echo "Commited!"
+
+run: all
+	./$(NAME)
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, libmlx, libft
+.PHONY: re run fclean clean all
+
+-include $(DEPENDS)

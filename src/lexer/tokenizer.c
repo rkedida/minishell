@@ -6,11 +6,13 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:08:10 by rkedida           #+#    #+#             */
-/*   Updated: 2022/09/24 22:10:01 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/01 20:23:10 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_token(t_token *token);
 
 int set_state(char line)
 {
@@ -84,6 +86,8 @@ void	tokenize(char *line, t_token *token)
 				token_value = NULL;
 			}
 		}
+		print_token(token);
 		line++;
 	}
+	// return (check_syntax());
 }

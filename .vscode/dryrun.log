@@ -1,7 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/rkedida/Documents/minishell'
 mkdir -p ./obj/
- 
 cc -g -I ./includes -c src/main.c -o obj/main.o && printf "\033[32;1m\033[1m\rCompiling: main.c\r\e[35C[OK]\n\033[0m"
 cc -g -I ./includes -c src/tokenizer.c -o obj/tokenizer.o && printf "\033[32;1m\033[1m\rCompiling: tokenizer.c\r\e[35C[OK]\n\033[0m"
 cc -g -I ./includes -c src/tokenizer_utils.c -o obj/tokenizer_utils.o && printf "\033[32;1m\033[1m\rCompiling: tokenizer_utils.c\r\e[35C[OK]\n\033[0m"

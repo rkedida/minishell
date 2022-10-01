@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:05:41 by rkedida           #+#    #+#             */
-/*   Updated: 2022/09/24 22:22:08 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/01 20:34:48 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 # define NO_RESET		n
 # define PLACEHOLDER	0x1D
 
-#include "readline/readline.h"
-#include "readline/history.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "../libft/includes/libft.h"
 
 typedef struct s_token
 {
@@ -78,6 +77,33 @@ enum e_state
 	INDQUOTE,
 	OUTDQUOTE
 };
+
+// functions in syntax_checker.c
+
+int	print_err(char *format, char *s1, char *s2, char *s3);
+int	err_handle(int error_code, char *prog, char *error_input);
+int	check_syntax(void);
+
+// functions in tokenize_operators.c
+
+int	is_redir(t_token *token);
+int	tokenize_operators(void);
+
+// functions in param_expand.c
+
+int		paramlen(char *param);
+char	*field_split(char *str);
+char	*expand_single(char *value, int var_pos, char *var, bool split);
+void	replace_placeholders(void);
+void	param_expand(void);
+
+// functions in lexer.c
+
+t_token	*init(t_token *token);
+bool	quotes_matched(char *line);
+int		strip_quotes(void);
+void	del_empty_tokens(void);
+int		lexer(char *user_input);
 
 // functions in tokenizer.c
 
