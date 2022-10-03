@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:45:57 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 00:22:44 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 19:34:16 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	read_heredocs(char	*dlmtr)
 	char		*heredoc;
 
 	line = NULL;
+	// print_heredocs(data()->cmds->heredocs);
 	data()->n_heredocs++;
+	// print_heredocs(data()->cmds->heredocs);
 	heredoc = ft_strjoin("heredoc", ft_itoa(data()->n_heredocs));
 	fd = open(heredoc, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	data()->state = 2;

@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:12:48 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 19:50:22 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:15:07 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ t_token	*save_token(char *line, char *value, int state)
 	t_token	**token;
 	t_token	*tmp;
 	int		type;
-
+	bool expansion;
+	
+	if (*line == DOLLAR)
+		expansion = true;
+	else
+		expansion = false;
 	if (check_operators(*line) && state == 0)
 		type = OPERATOR;
 	else
@@ -69,7 +74,7 @@ t_token	*save_token(char *line, char *value, int state)
 	(*token)->type = type;
 	(*token)->split = split;
 	(*token)->error = false;
-	(*token)->expansion = false;
+	(*token)->expansion = expansion;
 	(*token)->next = NULL;
 	return (*token);
 }

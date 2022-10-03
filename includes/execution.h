@@ -6,15 +6,15 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:49:03 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 20:04:25 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:23:38 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef EXECUTER_H
+#ifndef EXECUTER_H
 # define EXECUTER_H
 
 # include "minishell.h"
-# include <stdbool.h>
+// # include <stdbool.h>
 
 int		xecute(void);
 void	init_fds(int fd[4]);

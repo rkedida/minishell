@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:08:10 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 22:50:20 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:13:28 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool shall_split(char *line, char *token_value, int state)
 	return (false);
 }
 
+void	print_token(t_token *token);
+
 void	tokenize(char *line, t_token *token)
 {
 	int state;
@@ -73,7 +75,7 @@ void	tokenize(char *line, t_token *token)
 	while (*line)
 	{
 		state = set_state(*line);
-		printf("char is: %c\n", *line);
+		// printf("char is: %c\n", *line);
 		if (*line == '$' && state == SQUOTE)
 			*line = PLACEHOLDER;
 		if (!check_spaces(*line) || state != 0)
@@ -85,8 +87,8 @@ void	tokenize(char *line, t_token *token)
 				token_value = NULL;
 			}
 		}
-		// print_token(token);
 		line++;
 	}
+	// print_token(data()->tokens);
 	// return (check_syntax());
 }

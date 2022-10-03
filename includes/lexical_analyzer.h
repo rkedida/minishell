@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:05:41 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 19:53:24 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:20:03 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 # define NO_RESET		n
 # define PLACEHOLDER	0x1D
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
+// #include <stdio.h>
+// #include <string.h>
+// #include <stdbool.h>
+// #include <unistd.h>
+
+# include "minishell.h"
 
 typedef struct s_token
 {

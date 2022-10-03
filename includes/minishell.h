@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:36:04 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 19:55:27 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:35:47 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 #include "parser.h"
 #include "execution.h"
 
-struct s_args;
 struct s_token;
+struct s_args;
 struct s_infiles;
 struct s_outfiles;
 struct s_heredocs;
@@ -39,22 +39,33 @@ typedef struct s_env_list
 	char				*value;
 	bool				is_env;
 	struct s_env_list	*next;
-}	t_env_list;
+}				t_env_list;
 
 typedef struct s_data
 {
-	t_simple_cmd	*cmds;
-	t_token		*tokens;
-	t_env_list	*env_list;
-	char		**envp;
-	int			state;
-	int			exit_state;
-	int			n_heredocs;
+	t_token				*tokens;
+	t_env_list			*env_list;
+	t_simple_cmd		*cmds;
+	char				**envp;
+	int					state;
+	int					exit_state;
+	int					n_heredocs;
 	
 }				t_data;
 
 char		*ft_getenv(char *name);
 t_data		*data(void);
 t_env_list	*ft_getenv_list(char *name);
+
+
+// functions in printer should be deleted before push
+
+void	print_infiles(t_infiles *infile);
+void	print_outfiles(t_outfiles *outfile);
+void	print_heredocs(t_heredocs *heredocs);
+void	print_error(t_simple_cmd *simple_cmd);
+void	print_simple_cmd(t_simple_cmd *simple_cmd);
+void	print_cmds(void);
+void	print_token(t_token *token);
 
 #endif

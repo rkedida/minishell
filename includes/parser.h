@@ -6,19 +6,21 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:13:07 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 18:17:24 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:35:41 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
+// #include <stdio.h>
+// #include <string.h>
+// #include <stdbool.h>
+// #include <unistd.h>
+
+# include "minishell.h"
 
 struct s_env_list;
 
@@ -26,26 +28,26 @@ typedef struct s_args
 {
 	char			*value;
 	struct s_args	*next;
-}			t_args;
+}				t_args;
 
 typedef struct s_infiles
 {
 	int					value;
 	char				*dlmtr;
 	struct s_infiles	*next;
-}			t_infiles;
+}				t_infiles;
 
 typedef struct s_outfiles
 {
 	int					value;
 	struct s_outfiles	*next;
-}			t_outfiles;
+}				t_outfiles;
 
 typedef struct s_heredocs
 {
 	int					value;
 	struct s_heredocs	*next;
-}			t_heredocs;
+}				t_heredocs;
 
 typedef struct s_simple_cmd
 {

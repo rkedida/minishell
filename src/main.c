@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:36:34 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 22:46:16 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 19:34:36 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,59 +172,6 @@
 
 //////////////////// printer //////////////////////////
 
-// // printer for infiles
-
-// void	print_infiles(t_infiles *infile)
-// {
-// 	while (infile != NULL)
-// 	{
-// 		printf("infile: %d ", infile->value);
-// 		infile = infile->next;
-// 	}
-// }
-
-// // printer for outfiles
-
-// void	print_outfiles(t_outfiles *outfile)
-// {
-// 	while (outfile != NULL)
-// 	{
-// 		printf("outfile: %d\n", outfile->value);
-// 		outfile = outfile->next;
-// 	}
-// }
-
-// // printer for simple_cmd
-
-// void	print_simple_cmd(t_simple_cmd *simple_cmd)
-// {
-// 	int	i;
-
-// 	while (simple_cmd != NULL)
-// 	{
-// 		printf("cmd: %s ", simple_cmd->cmd);
-// 		i = 0;
-// 		while (simple_cmd->args != NULL)
-// 		{
-// 			printf("args[%d]: %s\n", i, simple_cmd->args->value);
-// 			i++;
-// 			simple_cmd->args = simple_cmd->args->next;
-// 		}
-// 		print_infiles(simple_cmd->infile);
-// 		print_outfiles(simple_cmd->outfile);
-// 		simple_cmd = simple_cmd->next;
-// 	}
-// }
-
-// // printer for cmds
-
-// void	print_cmds(void)
-// {
-// 	t_simple_cmd	*simple_cmd;
-
-// 	simple_cmd = data()->cmds;
-// 	print_simple_cmd(simple_cmd);
-// }
 
 // // function to free nodes
 
@@ -267,21 +214,6 @@
 // }
 
 #include "../includes/minishell.h"
-
-void	print_token(t_token *token)
-{
-	t_token *tmp = token;
-	int		i;
-
-	i = 0;
-	while (tmp != NULL)
-	{
-		printf("count = [%d] : value = [%s] : type = [%d] : split = [%i] : error = [%i] : expansion = [%i]\n", i++, tmp->value, tmp->type, tmp->split, tmp->error, tmp->expansion);
-		tmp = tmp->next;
-	}
-	data()->tokens = NULL;
-	// printf("\n");
-}
 
 char	*prompt(void)
 {
@@ -365,6 +297,8 @@ int	main(int argc, char **argv, char **envp)
 				add_history(line);
 			if (lexer(line) != 6 && !parse())
 				xecute();
+			// print_cmds();
+			// print_token(data()->tokens);
 			data()->state = 0;
 		}
 		else

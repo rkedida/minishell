@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:07:05 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 19:51:24 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:16:18 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	del_empty_tokens(void)
 	}
 }
 
+void	print_token(t_token *token);
+
 int	lexer(char *user_input)
 {
 	t_token	*token;
@@ -109,6 +111,7 @@ int	lexer(char *user_input)
 	if (!*line)
 		return (-1);
 	tokenize(line, token);
+	// print_token(data()->tokens);
 	param_expand();
 	strip_quotes();
 	tokenize_operators();
