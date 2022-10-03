@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:12:48 by rkedida           #+#    #+#             */
-/*   Updated: 2022/09/24 22:14:45 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 19:50:22 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_data	*data(void)
 	return (&data);
 }
 
-char *ft_append_char(char *line, char c)
+char *append_char_to_token(char *line, char c)
 {
 	int		i;
 	int		len;
@@ -46,7 +46,7 @@ char *ft_append_char(char *line, char c)
 	return (dest);
 }
 
-t_token *save_token(char *line, char *value, int state)
+t_token	*save_token(char *line, char *value, int state)
 {
 	bool	split;
 	t_token	**token;

@@ -6,11 +6,11 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:45:57 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 18:06:27 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 00:22:44 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/rkedida/Documents/minishell/includes/minishell.h"
+#include "minishell.h"
 
 char	*heredoc_expand(char *line)
 {

@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:27:43 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 20:34:40 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 22:47:05 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ char	*field_split(char *str)
 	{
 		if (!check_spaces(*str))
 		{
-			split = ft_append_char(split, *str);
+			split = append_char_to_token(split, *str);
 			if (check_spaces(*(str + 1)))
-				split = ft_append_char(split, SPACE);
+				split = append_char_to_token(split, SPACE);
 		}
 		str++;
 	}
@@ -90,7 +90,7 @@ void	param_expand(void)
 	int		var_pos;
 
 	token = data()->tokens;
-	while (token && data()->tokens->expansion == true)
+	while (token)
 	{
 		var = ft_strchr(token->value, DOLLAR);
 		// if (!var)

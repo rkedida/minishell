@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:05:41 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 20:34:48 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 19:53:24 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	param_expand(void);
 
 // functions in lexer.c
 
-t_token	*init(t_token *token);
+t_token	*init_t_token(t_token *token);
 bool	quotes_matched(char *line);
 int		strip_quotes(void);
 void	del_empty_tokens(void);
@@ -115,7 +115,7 @@ void	tokenize(char *line, t_token *token);
 
 // functions in tokenizer_utils.c
 
-char	*ft_append_char(char *line, char c);
+char	*append_char_to_token(char *line, char c);
 t_token	*save_token(char *line, char *value, int state);
 
 

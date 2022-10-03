@@ -6,13 +6,11 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:08:10 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 20:23:10 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 22:50:20 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_token(t_token *token);
 
 int set_state(char line)
 {
@@ -75,18 +73,19 @@ void	tokenize(char *line, t_token *token)
 	while (*line)
 	{
 		state = set_state(*line);
+		printf("char is: %c\n", *line);
 		if (*line == '$' && state == SQUOTE)
 			*line = PLACEHOLDER;
 		if (!check_spaces(*line) || state != 0)
 		{
-			token_value = ft_append_char(token_value, *line);
+			token_value = append_char_to_token(token_value, *line);
 			if (shall_split(line, token_value, state))
 			{
 				token = save_token(line, token_value, state);
 				token_value = NULL;
 			}
 		}
-		print_token(token);
+		// print_token(token);
 		line++;
 	}
 	// return (check_syntax());

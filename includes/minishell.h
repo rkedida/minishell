@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 12:36:04 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 21:50:01 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 19:55:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@
 #include <readline/history.h>
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include "../libft/includes/libft.h"
+#include "env.h"
 #include "lexical_analyzer.h"
 #include "parser.h"
+#include "execution.h"
 
 struct s_args;
 struct s_token;
@@ -50,11 +53,8 @@ typedef struct s_data
 	
 }				t_data;
 
-t_data	*data(void);
-
-// functions in get_env.c
-
+char		*ft_getenv(char *name);
+t_data		*data(void);
 t_env_list	*ft_getenv_list(char *name);
-char	*ft_getenv(char *name);
 
 #endif

@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   executer_utils_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 22:14:12 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 20:03:02 by rkedida          ###   ########.fr       */
+/*   Created: 2022/10/02 11:37:08 by rkedida           #+#    #+#             */
+/*   Updated: 2022/10/02 11:37:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(int argc, char **argv, char **envp)
+void	init_fds(int fd[4])
 {
-	if (argc == 1)
-	{
-		print_env_or_export("env", NULL);
-		return (0);
-	}
-	return (1);
+	fd[STDIN_INIT] = dup(STDIN_FILENO);
+	fd[STDOUT_INIT] = dup(STDOUT_FILENO);
+	fd[IN] = dup(fd[STDIN_INIT]);
+	fd[OUT] = dup(fd[STDOUT_INIT]);
 }
 
-char	*ft_getenv(char *name)
+void	reset_fds(int fd[4])
 {
-	t_env_list	*tmp_env;
-
-	tmp_env = ft_getenv_list(name);
-	if (tmp_env)
-		return (tmp_env->value);
-	return (NULL);
+	close(fd[IN]);
+	close(fd[OUT]);
+	dup2(fd[STDIN_INIT], STDIN_FILENO);
+	dup2(fd[STDOUT_INIT], STDOUT_FILENO);
+	close(fd[STDIN_INIT]);
+	close(fd[STDOUT_INIT]);
 }

@@ -6,13 +6,13 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:07:05 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 20:16:30 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 19:51:24 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*init(t_token *token)
+t_token	*init_t_token(t_token *token)
 {
 	token = malloc(sizeof(t_token));
 	token->value = NULL;
@@ -61,7 +61,7 @@ int	strip_quotes(void)
 			state = set_state(*quoted);
 			if ((*quoted != SQUOTE && *quoted != DQUOTE)
 				|| (state != *quoted && state != 0))
-				stripped = ft_append_char(stripped, *quoted);
+				stripped = append_char_to_token(stripped, *quoted);
 			quoted++;
 		}
 		token->value = stripped;
@@ -92,7 +92,8 @@ int	lexer(char *user_input)
 	char	*line;
 	char	*quoted;
 
-	token = init(token);
+	token = NULL;
+	token = init_t_token(token);
 	line = ft_strdup(user_input);
 	data()->state = 0;
 	line = ft_strtrim(line, "\n\t ");

@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:36:34 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 20:22:39 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/02 22:46:16 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,108 @@
 
 // #include <string.h>
 // #include <stdlib.h>
-#include "minishell.h"
 
+// #include "minishell.h"
+
+//////////////////////////parsing////////////////////////////////////
+
+//////////////////// printer //////////////////////////
+
+// // printer for infiles
+
+// void	print_infiles(t_infiles *infile)
+// {
+// 	while (infile != NULL)
+// 	{
+// 		printf("infile: %d ", infile->value);
+// 		infile = infile->next;
+// 	}
+// }
+
+// // printer for outfiles
+
+// void	print_outfiles(t_outfiles *outfile)
+// {
+// 	while (outfile != NULL)
+// 	{
+// 		printf("outfile: %d\n", outfile->value);
+// 		outfile = outfile->next;
+// 	}
+// }
+
+// // printer for simple_cmd
+
+// void	print_simple_cmd(t_simple_cmd *simple_cmd)
+// {
+// 	int	i;
+
+// 	while (simple_cmd != NULL)
+// 	{
+// 		printf("cmd: %s ", simple_cmd->cmd);
+// 		i = 0;
+// 		while (simple_cmd->args != NULL)
+// 		{
+// 			printf("args[%d]: %s\n", i, simple_cmd->args->value);
+// 			i++;
+// 			simple_cmd->args = simple_cmd->args->next;
+// 		}
+// 		print_infiles(simple_cmd->infile);
+// 		print_outfiles(simple_cmd->outfile);
+// 		simple_cmd = simple_cmd->next;
+// 	}
+// }
+
+// // printer for cmds
+
+// void	print_cmds(void)
+// {
+// 	t_simple_cmd	*simple_cmd;
+
+// 	simple_cmd = data()->cmds;
+// 	print_simple_cmd(simple_cmd);
+// }
+
+// // function to free nodes
+
+// void	free_nodes(t_token *token)
+// {
+// 	t_token *tmp;
+
+// 	while (token != NULL)
+// 	{
+// 		tmp = token;
+// 		token = token->next;
+// 		free(tmp);
+// 	}
+// }
+
+// int main(int ac, char **argv)
+// {
+// 	char	*line;
+// 	t_token	*token;
+
+// 	line = NULL;
+// 	token = init_t_token(token);
+// 	while (1)
+// 	{
+// 		line = readline("BALU > ");
+// 		if (ft_strlen(line) > 0)
+// 			add_history(line);
+// 		// tokenize(line, token);
+// 		lexer(line);
+// 		parse();
+// 		print_token(data()->tokens);
+		
+// 		if (strcmp(line, ";") == 0)
+// 		{
+// 			printf("fuck you\n");
+// 			break ;
+// 		}
+// 	}
+// 	return 0;
+// }
+
+#include "../includes/minishell.h"
 
 void	print_token(t_token *token)
 {
@@ -176,107 +276,100 @@ void	print_token(t_token *token)
 	i = 0;
 	while (tmp != NULL)
 	{
-		printf("[%d] : [%s] -> ", i++, tmp->value);
+		printf("count = [%d] : value = [%s] : type = [%d] : split = [%i] : error = [%i] : expansion = [%i]\n", i++, tmp->value, tmp->type, tmp->split, tmp->error, tmp->expansion);
 		tmp = tmp->next;
 	}
-	printf("\n");
-	token = NULL;
+	data()->tokens = NULL;
+	// printf("\n");
 }
 
-
-
-//////////////////////////parsing////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////// printer //////////////////////////
-
-// // printer for infiles
-
-void	print_infiles(t_infiles *infile)
-{
-	while (infile != NULL)
-	{
-		printf("infile: %d ", infile->value);
-		infile = infile->next;
-	}
-}
-
-// printer for outfiles
-
-void	print_outfiles(t_outfiles *outfile)
-{
-	while (outfile != NULL)
-	{
-		printf("outfile: %d\n", outfile->value);
-		outfile = outfile->next;
-	}
-}
-
-// printer for simple_cmd
-
-void	print_simple_cmd(t_simple_cmd *simple_cmd)
-{
-	int	i;
-
-	while (simple_cmd != NULL)
-	{
-		printf("cmd: %s ", simple_cmd->cmd);
-		i = 0;
-		while (simple_cmd->args != NULL)
-		{
-			printf("args[%d]: %s\n", i, simple_cmd->args->value);
-			i++;
-			simple_cmd->args = simple_cmd->args->next;
-		}
-		print_infiles(simple_cmd->infile);
-		print_outfiles(simple_cmd->outfile);
-		simple_cmd = simple_cmd->next;
-	}
-}
-
-// printer for cmds
-
-void	print_cmds(void)
-{
-	t_simple_cmd	*simple_cmd;
-
-	simple_cmd = data()->cmds;
-	print_simple_cmd(simple_cmd);
-}
-
-int main(int ac, char **argv)
+char	*prompt(void)
 {
 	char	*line;
-	t_token	*token;
+	char	*prompt;
+	char	*cwd;
+	char	*last;
 
 	line = NULL;
-	token = init(token);
-	while (1)
+	prompt = "$ ";
+	cwd = getcwd(NULL, 0);
+	last = ft_strrchr(cwd, '/');
+	last++;
+	prompt = ft_strjoin(last, prompt);
+	free(cwd);
+	line = readline(prompt);
+	return (line);
+}
+
+int	end_session(void)
+{
+	// change_ctrlc_sym(true);
+	// mem_free_all();
+	// rl_clear_history();
+	printf("exit\n");
+	return (data()->exit_state);
+}
+
+int	refresh_session(int argc, char **argv, char *envp[])
+{
+	data()->envp = envp;
+	data()->state = 0;
+	data()->tokens = NULL;
+	data()->cmds = NULL;
+	data()->n_heredocs = 0;
+	return (0);
+}
+
+int	init_session(int argc, char **argv, char *envp[])
+{
+	data()->exit_state = 0;
+	// data()->malloc_count = 0;
+	// data()->mem_alloced = NULL;
+	// signal(SIGINT, sig_ctrlc);
+	// signal(SIGQUIT, SIG_IGN);
+	// change_ctrlc_sym(false);
+	init_env(argc, argv, envp);
+	return (0);
+}
+
+void print_ascii_art()
+{
+	printf("\033[32m");
+	FILE *stream = fopen("src/ascii_header.txt", "r");
+	if (stream)
 	{
-		line = readline("BALU > ");
-		if (ft_strlen(line) > 0)
-			add_history(line);
-		// tokenize(line, token);
-		lexer(line);
-		parse();
-		// if (data()->tokens)
-			// print_token(data()->tokens);
-		if (strcmp(line, ";") == 0)
-		{
-			printf("fuck you\n");
-			break ;
-		}
+		char line[256];
+		while (fgets(line, sizeof(line), stream))
+			printf("%s", line);
+		fclose(stream);
 	}
-	return 0;
+	else
+		printf("\033[31mError: ascii_art.txt not found\n");
+	printf("\033[0m\n");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	*line;
+
+	line = NULL;
+	// print_ascii_art();
+	init_session(argc, argv, envp);
+	while (true)
+	{
+		refresh_session(argc, argv, envp);
+		line = prompt();
+		if (line)
+		{
+			if (*line)
+				add_history(line);
+			if (lexer(line) != 6 && !parse())
+				xecute();
+			data()->state = 0;
+		}
+		else
+			break ;
+		free(line);
+	}
+	return (end_session());
 }

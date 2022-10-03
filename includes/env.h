@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 18:10:09 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 18:10:27 by rkedida          ###   ########.fr       */
+/*   Created: 2022/10/02 12:28:46 by rkedida           #+#    #+#             */
+/*   Updated: 2022/10/02 12:29:26 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef ENV_H
+# define ENV_H
 
-t_env_list	*ft_getenv_list(char *name)
-{
-	t_env_list	*tmp_env;
+void		print_env_or_export(char *cmd, char **env_arr);
 
-	tmp_env = data()->env_list;
-	while (tmp_env != NULL)
-	{
-		if ((strcmp(name, tmp_env->name)) == 0)
-			return (tmp_env);
-		tmp_env = tmp_env->next;
-	}
-	return (NULL);
-}
-
-char	*ft_getenv(char *name)
-{
-	t_env_list	*tmp_env;
-
-	tmp_env = ft_getenv_list(name);
-	if (tmp_env)
-		return (tmp_env->value);
-	return (NULL);
-}
+#endif
