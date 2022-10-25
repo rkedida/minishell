@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:36 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 11:48:08 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/23 00:15:16 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_pwd(void)
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		return (err_handle(1, "pwd", path));
+		return (err_handle(1, "pwd: ", ft_strjoin2(path, ": ", 0)));
 	printf("%s\n", path);
 	free(path);
-	return (0);
+	exit(0);
 }

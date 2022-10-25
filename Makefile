@@ -6,7 +6,7 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/10/02 19:55:02 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/25 18:48:17 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ HEADERS 	= $(shell find ./includes -name "*.h")
 LIBFT		= ./libft/libft.a
 
 OBJECTS 	= $(patsubst %.c, %.o, $(SOURCES))
-# DEPENDS 	= $(patsubst %.c, %.d, $(SOURCES))
 
 CFLAGS 		= -g
 RLFLAGS 	= -lreadline

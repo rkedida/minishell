@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:13:49 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 19:58:25 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/24 09:49:07 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,28 @@ void	change_dir(int dir, char *path, char *oldpath)
 	dir = chdir(path);
 	if (dir == -1)
 	{
-		err_handle(3, "cd", path);
+		if (!strcmp(path, "?"))
+			err_handle(7, "cd: ", ft_strjoin2(" ", ": ", 0));
+		else
+			err_handle(3, "cd: ", ft_strjoin2(path, ": ", 0));
 		data()->exit_state = 1;
 	}
 	else
-		add_env("OLDPWD", ft_strdup(oldpath));
+		add_env(ft_strdup("OLDPWD"), ft_strdup(oldpath));
 }
 
-int	ft_cd(int argc, char **argv, char **envp)
+int	ft_cd(int argc, char **argv)
 {
 	int			dir;
 	char		*path;
 	char		*oldpath;
 
 	dir = 0;
-	path = argv[1];
+	if (argc > 1)
+		path = ft_strdup(argv[1]);
+	else if (argc == 1)
+		path = ft_strdup("~");
 	oldpath = getcwd(NULL, 0);
-	if (argc == 1)
-		path = "~";
 	if (strcmp(path, "~") == 0)
 		path = ft_getenv("HOME");
 	if (strcmp(path, "-") == 0)
@@ -45,6 +49,7 @@ int	ft_cd(int argc, char **argv, char **envp)
 	}
 	if (path != NULL && *path)
 		change_dir(dir, path, oldpath);
+	free(path);
 	free(oldpath);
 	return (1);
 }

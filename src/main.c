@@ -3,233 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:36:34 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/03 19:34:36 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/24 22:33:13 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// #include "minishell.h"
-
-// int	check_qoutes(char *str, char opening_quote, int i)
-// {	
-// 	while (str[i])
-// 	{
-// 		if (str[i] == opening_quote)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-
-// void	qoutes_check(char *line)
-// {
-// 	int	i;
-// 	int	quote_opened;
-
-// 	i = 0;
-// 	quote_opened = 0;
-// 	while (line[i])
-// 	{
-// 		if (line[i] && line[i] == '\'')
-// 		{
-// 			i++;
-// 			if (check_qoutes(line, '\'', i) == 0 && quote_opened)
-// 			{
-// 				printf("minishell : : command not found\n");
-// 				break ;
-// 			}
-// 			quote_opened = 1;
-// 		}
-// 		if (line[i] && line[i] == '\"')
-// 		{
-// 			i++;
-// 			if (check_qoutes(line, '\"', i) == 0 && quote_opened)
-// 			{
-// 				printf("minishell : : command not found\n");
-// 				break ;
-// 			}
-// 			quote_opened = 1;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// // write a function for creating nodes
-
-// // write a function for splitting a line into nodes
-
-// // void	split_line(char *line)
-// // {
-// // 	t_cmd	*node;
-// // 	char	*tmp;
-// // 	int		i;
-
-// // 	i = 0;
-// // 	while (line[i])
-// // 	{
-// // 		tmp = ft_strcpyt(line, ' ');
-// // 		node = create_node(tmp);
-// // 		i++;
-// // 	}
-// // }
-
-// char *parsing(char *line)
-// {
-// 	char	**tmp;
-// 	char	*str;
-// 	int		i;
-// 	int		counter;
-
-// 	i = 0;
-// 	while (line && line[i] != '\0')
-// 	{
-// 		tmp = ft_split(line, ' ');
-// 		str = ft_strdup(tmp[0]);
-// 		i++;
-// 	}
-// 	printf("%s\n", str);
-// 	return (str);
-// }
-
-// //  write a function for creating nodes
-
-// t_cmd	*create_nodes(char *line)
-// {
-// 	t_cmd	*node;
-// 	char	*tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	node = malloc(sizeof(t_cmd));
-// 	if (!node)
-// 		return (NULL);
-// 	// while (node->next != NULL)
-// 	// 	node = node->next;
-// 	if (!node->cmd)
-// 	{
-// 		node->cmd = line;
-// 		node->next = NULL;
-// 	}
-// 	while (node->cmd->next != NULL)
-// 		node = node->next;
-// 	return (node);
-// }
-
-// void	prompt(int ac, char **av, char **envp)
-// {
-// 	// int		i;
-// 	char	*line;
-// 	char	*string;
-// 	t_cmd	*cmd_node;
-
-// 	line = NULL;
-// 	// i = 1;
-// 	while (true)
-// 	{
-// 		line = readline("BALU > ");
-// 		if (ft_strlen(line) > 0)
-// 			add_history(line);
-// 		qoutes_check(line);
-// 		// printf("%s\n", line);
-// 		string = parsing(line);
-// 		cmd_node = create_nodes(string);
-// 		// printf("cmd_node = %s\n", cmd_node->cmd);
-// 		printf("cmd_node->cmd = %s\n", cmd_node->cmd);
-// 		cmd_node = cmd_node->next;
-		
-
-// 		if (strcmp(line, ";") == 0)
-// 		{
-// 			printf("fuck you\n");
-// 			break ;
-// 		}
-// 		// parsing(ac, av, envp);
-// 		if (strcmp(line, "exit") == 0)
-// 			break ;
-// 	}
-// }
-
-// // int main(void)
-// int main(int ac, char **av, char **envp)
-// {
-// 	char *tab;
-
-// 	prompt(ac, av, envp);
-// 	clear_history();
-// 	// rl_on_new_line()
-// 	return (0);
-// }
-
-// #include <string.h>
-// #include <stdlib.h>
-
-// #include "minishell.h"
-
-//////////////////////////parsing////////////////////////////////////
-
-//////////////////// printer //////////////////////////
-
-
-// // function to free nodes
-
-// void	free_nodes(t_token *token)
-// {
-// 	t_token *tmp;
-
-// 	while (token != NULL)
-// 	{
-// 		tmp = token;
-// 		token = token->next;
-// 		free(tmp);
-// 	}
-// }
-
-// int main(int ac, char **argv)
-// {
-// 	char	*line;
-// 	t_token	*token;
-
-// 	line = NULL;
-// 	token = init_t_token(token);
-// 	while (1)
-// 	{
-// 		line = readline("BALU > ");
-// 		if (ft_strlen(line) > 0)
-// 			add_history(line);
-// 		// tokenize(line, token);
-// 		lexer(line);
-// 		parse();
-// 		print_token(data()->tokens);
-		
-// 		if (strcmp(line, ";") == 0)
-// 		{
-// 			printf("fuck you\n");
-// 			break ;
-// 		}
-// 	}
-// 	return 0;
-// }
 
 #include "../includes/minishell.h"
 
 char	*prompt(void)
 {
 	char	*line;
-	char	*prompt;
-	char	*cwd;
-	char	*last;
 
 	line = NULL;
-	prompt = "$ ";
-	cwd = getcwd(NULL, 0);
-	last = ft_strrchr(cwd, '/');
-	last++;
-	prompt = ft_strjoin(last, prompt);
-	free(cwd);
-	line = readline(prompt);
+	line = readline("minishell$");
 	return (line);
 }
 
@@ -238,12 +26,15 @@ int	end_session(void)
 	// change_ctrlc_sym(true);
 	// mem_free_all();
 	// rl_clear_history();
-	printf("exit\n");
+	print_exit();
+	free_env(data()->env_list);
 	return (data()->exit_state);
 }
 
-int	refresh_session(int argc, char **argv, char *envp[])
+int	refresh_session(char *envp[])
 {
+	if (!*envp)
+		*envp = ("PATH=/");
 	data()->envp = envp;
 	data()->state = 0;
 	data()->tokens = NULL;
@@ -252,58 +43,49 @@ int	refresh_session(int argc, char **argv, char *envp[])
 	return (0);
 }
 
-int	init_session(int argc, char **argv, char *envp[])
+void	handler()
 {
-	data()->exit_state = 0;
-	// data()->malloc_count = 0;
-	// data()->mem_alloced = NULL;
-	// signal(SIGINT, sig_ctrlc);
-	// signal(SIGQUIT, SIG_IGN);
-	// change_ctrlc_sym(false);
-	init_env(argc, argv, envp);
-	return (0);
+	write (1, "\n", 1);
+	rl_free_line_state();
+	rl_on_new_line();
+	//rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void print_ascii_art()
+int	init_session(char *envp[])
 {
-	printf("\033[32m");
-	FILE *stream = fopen("src/ascii_header.txt", "r");
-	if (stream)
-	{
-		char line[256];
-		while (fgets(line, sizeof(line), stream))
-			printf("%s", line);
-		fclose(stream);
-	}
-	else
-		printf("\033[31mError: ascii_art.txt not found\n");
-	printf("\033[0m\n");
+	data()->exit_state = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handler);
+	init_env(envp);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
+	char	*input;
 
-	line = NULL;
-	// print_ascii_art();
-	init_session(argc, argv, envp);
+	input = NULL;
+	init_session(envp);
+	if (argc > 1)
+		printf("%s is ignored\n", argv[0]);
 	while (true)
 	{
-		refresh_session(argc, argv, envp);
-		line = prompt();
-		if (line)
+		refresh_session(envp);
+		input = prompt();
+		if (input)
 		{
-			if (*line)
-				add_history(line);
-			if (lexer(line) != 6 && !parse())
+			if (*input && ft_strlen(input) > 1)
+				add_history(input);
+			if (lexer(ft_strdup(input)) != 6 && !parse())
 				xecute();
-			// print_cmds();
-			// print_token(data()->tokens);
 			data()->state = 0;
+			free_tokens(data()->tokens);
+			free_cmds(data()->cmds);
 		}
 		else
 			break ;
-		free(line);
+		free(input);
 	}
 	return (end_session());
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 12:11:35 by rkedida           #+#    #+#             */
-/*   Updated: 2022/09/26 16:01:07 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/23 19:16:13 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int			ft_tolower(int c);
 int			ft_toupper(int c);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s1);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_substr(char *s, unsigned int start, size_t len, int flag);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_strjoin_withnull(char *s1, char *s2);
-char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_strjoin2(char *s1, char *s2,int flag);
+char		*ft_strjoin_withnull(char *s1, char *s2, int flag);
+char		*ft_strtrim(char *s1, char const *set, int flag);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_itoa(int n);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));

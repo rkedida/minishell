@@ -6,89 +6,111 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:08:10 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/03 15:13:28 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:58:55 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int set_state(char line)
+t_token	*get_any_token(char **input)
 {
-	int	*state;
+	t_token	*token;
+	int		i;
 
-	state = &data()->state;
-	if (line == DQUOTE && *state == DQUOTE)
-			*state = 0;
-	else if (line == DQUOTE && *state == 0)
-			*state = DQUOTE;
-	if (line == SQUOTE && *state == SQUOTE)
-			*state = 0;
-	else if (line == SQUOTE && *state == 0)
-		*state = SQUOTE;
-	return (*state);
-}
-
-bool	check_spaces(char c)
-{
-	if (c == SPACE || c == TAB || c == NEWLINE)
-		return (true);
-	return (false);
-}
-
-bool check_operators(char c)
-{
-	if (c == LESS || c == GREATER || c == PIPE)
-		return (true);
-	return (false);
-}
-
-bool shall_split(char *line, char *token_value, int state)
-{
-	char	char_next;
-
-	char_next = *(line + 1);
-	if (char_next == '\0')
-		return (true);
-	if (check_spaces(char_next) && state == 0)
-		return (true);
-	if (!check_operators(*line) && check_operators(char_next) && state == 0)
-		return (true);
-	if (*line == PIPE && *(line + 1) == PIPE)
-		return (true);
-	if (check_operators(*line) && !check_operators(char_next) && state == 0)
-		return (true);
-	if ((check_operators(*line) && (char_next != *token_value
-			|| ft_strlen(token_value) > 1)) && state == 0)
-		return (true);
-	return (false);
-}
-
-void	print_token(t_token *token);
-
-void	tokenize(char *line, t_token *token)
-{
-	int state;
-	char *token_value;
-
-	state = 0;
-	token_value = NULL;
-	while (*line)
+	token = init_t_token();
+	if (!token)
+		return (NULL);
+	token->expansion = 1;
+	i = 0;
+	while (*(*input + i) && !ft_is_token_dlmtr(*(*input + i)))
+		i++;
+	if (i)
+		token->value = ft_substr(*input, 0, i, 0);
+	else
 	{
-		state = set_state(*line);
-		// printf("char is: %c\n", *line);
-		if (*line == '$' && state == SQUOTE)
-			*line = PLACEHOLDER;
-		if (!check_spaces(*line) || state != 0)
-		{
-			token_value = append_char_to_token(token_value, *line);
-			if (shall_split(line, token_value, state))
-			{
-				token = save_token(line, token_value, state);
-				token_value = NULL;
-			}
-		}
-		line++;
+		while (*(*input + i) && is_space(*(*input + i)))
+			i++;
+		if (i)
+			token->value = ft_strdup(" ");
+		else
+			token->value = ft_strdup("");
 	}
-	// print_token(data()->tokens);
-	// return (check_syntax());
+	*input = ft_substr(*input, i, ft_strlen(*input) - i, 1);
+	return (token);
+}
+
+void	set_type(t_token *token, int flag)
+{
+	if (check_operators(*token->value))
+		token->type = OPERATOR;
+	else if (!strcmp(token->value, " ") && !flag)
+		token->type = SPACE;
+	else
+		token->type = TOKEN;
+}
+
+t_token	*create_next_token(char **input)
+{
+	t_token	*token;
+	char	*copy;
+	int		flag;
+
+	if (!input || !*input || !**input)
+		return (NULL);
+	if (**input == '$' && (*(*input + 1) == '"' || *(*input + 1) == '\''))
+	{
+		copy = ft_strdup(*input + 1);
+		free(*input);
+		*input = copy;
+	}
+	flag = 0;
+	if (**input == '"')
+		token = get_dq_token(input, &flag);
+	else if (**input == '\'')
+		token = get_sq_token(input, &flag);
+	else if (**input == '>' || **input == '<' || **input == '|')
+		token = get_redir_token(input);
+	else
+		token = get_any_token(input);
+	set_type(token, flag);
+	return (token);
+}
+
+void	add_back(t_token **lst, t_token *new)
+{
+	t_token	*ptr;
+
+	if (!lst || !new)
+		return ;
+	ptr = *lst;
+	if (!ptr)
+	{
+		*lst = new;
+		new -> next = NULL;
+	}
+	else
+	{
+		while (ptr->next != NULL)
+		{
+			ptr = ptr->next;
+		}
+		ptr->next = new;
+	}
+}
+
+t_token	*get_tokens(char *input)
+{
+	t_token		*tokens;
+	t_token		*t;
+
+	input = ft_strtrim(input, " \t\b\v\n", 1);
+	t = create_next_token(&input);
+	tokens = NULL;
+	while (t != NULL)
+	{
+		add_back(&tokens, t);
+		t = create_next_token(&input);
+	}
+	free(input);
+	return (tokens);
 }

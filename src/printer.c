@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:31:01 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/03 19:17:43 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/24 09:58:53 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_simple_cmd(t_simple_cmd *simple_cmd)
 		i = 0;
 		while (simple_cmd->args != NULL)
 		{
-			printf("args[%d]: %s\n", i++, simple_cmd->args->value);
+			printf("args[%d]: |%s| space: %d\n", i++, simple_cmd->args->value, simple_cmd->args->space);
 			// i++;
 			simple_cmd->args = simple_cmd->args->next;
 		}

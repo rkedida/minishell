@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operators.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:31:34 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/01 14:31:43 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 03:30:20 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ int	is_redir(t_token *token)
 	if (token)
 	{
 		type = token->type;
-		if (type == LESS || type == LESS_LESS || type == GREATER || type == GREATER_GREATER)
+		if (type == LESS || type == LESS_LESS
+			|| type == GREATER || type == GREATER_GREATER)
 			return (true);
 	}
 	return (false);
 }
 
-int	tokenize_operators(void)
+void	tokenize_operators(void)
 {
 	t_token	*token;
 
@@ -44,12 +45,12 @@ int	tokenize_operators(void)
 				token->type = GREATER_GREATER;
 			else if (strcmp(token->value, "|") == 0)
 				token->type = PIPE;
-			if (is_redir(token) && token->next && token->next->type == TOKEN)
-				token->next->type = REDIR;
+			if (is_redir(token) && get_next_token(token)
+				&& get_next_token(token)->type == TOKEN)
+				get_next_token(token)->type = REDIR;
 		}
-		else if (token->type != REDIR)
+		else if (token->type != REDIR && token->type != SPACE)
 			token->type = WORD;
 		token = token->next;
 	}
-	return (0);
 }

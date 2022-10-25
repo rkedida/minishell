@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:28 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 20:04:53 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 07:46:05 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	update_existing(char *name, char *value)
 	existing = ft_getenv_list(name);
 	if (existing && value)
 	{
+		free(existing->name);
+		free(existing->value);
+		existing->name = name;
 		existing->value = value;
 		existing->is_env = true;
 	}
@@ -50,28 +53,37 @@ int	add_env(char *name, char *value)
 	return (0);
 }
 
-static int	update_env(char *argv[])
+void	set_name_value(char **name, char **value, char **argv)
 {
 	char		*assign;
+
+	assign = ft_strchr(*argv, '=');
+	if (assign)
+	{
+		*name = ft_substr(*argv, 0, assign - *argv, 0);
+		*value = ft_substr(*argv, ft_strlen(*argv)
+				- ft_strlen(assign) + 1, ft_strlen(assign + 1), 0);
+	}
+	else
+	{
+		*name = ft_strdup(*argv);
+		*value = ft_strdup("");
+	}
+}
+
+static int	update_env(char *argv[])
+{
 	char		*name;
 	char		*value;
 
 	value = NULL;
 	while (++argv && *argv)
 	{
-		if (**argv)
+		if (**argv && strcmp(*argv, " ") != 0)
 		{
-			assign = ft_strchr(*argv, '=');
-			if (assign)
-			{
-				name = ft_substr(*argv, 0, assign - *argv);
-				value = ft_substr(*argv, ft_strlen(*argv)
-						- ft_strlen(assign) + 1, ft_strlen(assign + 1));
-			}
-			else
-				name = *argv;
+			set_name_value(&name, &value, argv);
 			if (!is_valid_name(name))
-				err_handle(2, "export", name);
+				err_handle(2, "export:", ft_strjoin2(name, ": ", 0));
 			else
 				add_env(name, value);
 		}
@@ -79,7 +91,7 @@ static int	update_env(char *argv[])
 	return (0);
 }
 
-int	ft_export(int argc, char *argv[], char **envp)
+int	ft_export(int argc, char *argv[])
 {
 	char	**env_arr;
 

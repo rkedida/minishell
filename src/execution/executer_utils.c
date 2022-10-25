@@ -6,37 +6,60 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:36:32 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 12:51:20 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:46:24 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_args(t_simple_cmd *simple_cmd, char ***p_arg_array)
+int	arg_len(t_simple_cmd *simple_cmd, int mode)
+{
+	int		len;
+	t_args	*args;
+
+	len = 0;
+	args = simple_cmd->args;
+	while (args)
+	{
+		if (!args->space || !mode)
+			len++;
+		args = args->next;
+	}
+	return (len);
+}
+
+int	init_args(t_simple_cmd *simple_cmd, char ***p_arg_array, int mode)
 {
 	int		i;
 	int		len;
 	t_args	*args;
-	char	**arg_array;
 
 	i = 0;
-	len = 0;
-	args = simple_cmd->args;
-	while (args && ++len)
-		args = args->next;
+	len = arg_len(simple_cmd, mode);
 	*p_arg_array = malloc(sizeof(char *) * (len + 1));
 	if (*p_arg_array == NULL)
 		return (4);
-	arg_array = *p_arg_array;
-	arg_array[len] = NULL;
+	(*p_arg_array)[len] = NULL;
 	args = simple_cmd->args;
 	while (i < len)
 	{
-		arg_array[i] = args->value;
+		if (!args->space || !mode)
+		{
+			(*p_arg_array)[i] = args->value;
+			i++;
+		}
 		args = args->next;
-		i++;
 	}
 	return (len);
+}
+
+void	creat_path(char *cmd, char ***path)
+{
+	if (*path)
+		free(*path);
+	*path = malloc(sizeof(char *) * 2);
+	(*path)[0] = cmd;
+	(*path)[1] = NULL;
 }
 
 char	**ft_getpath(char *cmd)
@@ -45,57 +68,44 @@ char	**ft_getpath(char *cmd)
 	char	*keypair;
 	char	**path;
 
-	i = 0;
-	keypair = NULL;
-	path = ft_split(ft_getenv("PATH"), ':');
+	keypair = ft_getenv("PATH");
+	path = ft_split(keypair, ':');
+	free(keypair);
 	i = 0;
 	if (path == NULL || access(cmd, F_OK | X_OK) == 0)
-	{
-		path = malloc(sizeof(char *) * 2);
-		path[0] = cmd;
-		path[1] = NULL;
-	}
+		creat_path(cmd, &path);
 	else
 	{
 		while (path && path[i])
 		{
-			path[i] = ft_strjoin(path[i], "/");
-			path[i] = ft_strjoin(path[i], cmd);
+			path[i] = ft_strjoin2(ft_strjoin2(path[i], "/", 1), cmd, 1);
 			i++;
 		}
 	}
 	return (path);
 }
 
-bool	is_builtin(char	*cmd)
+int	check_cmds(char	*cmd)
 {
-	if (!strcmp(cmd, "cd") || !strcmp(cmd, "echo")
-		|| !strcmp(cmd, "cd") || !strcmp(cmd, "env")
-		|| !strcmp(cmd, "export") || !strcmp(cmd, "unset")
-		|| !strcmp(cmd, "pwd") || !strcmp(cmd, "export")
-		|| !strcmp(cmd, "exit"))
-		return (true);
-	return (false);
-}
-
-bool	check_cmds(char	*cmd)
-{
-	int		i;
-	bool	res;
-	char	**path;
+	int			i;
+	int			res;
+	char		**path;
+	struct stat	path_stat;
 
 	i = 0;
-	res = false;
+	res = 2;
 	path = ft_getpath(cmd);
 	while (path && path[i])
 	{
-		if (access(path[i], F_OK | X_OK) == 0)
-			res = true;
+		stat(path[i], &path_stat);
+		if (!S_ISDIR(path_stat.st_mode) && access(path[i], F_OK | X_OK) == 0)
+		{
+			res = 0;
+			break ;
+		}
 		i++;
 	}
-	if (is_builtin(cmd))
-		res = false;
 	if (path != NULL)
 		free_dp(path);
-	return (res);
+	return (res + S_ISDIR(path_stat.st_mode));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:42 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/02 20:01:10 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 07:46:22 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,56 @@ int	is_valid_name(char *argv)
 	return (true);
 }
 
-int	ft_unset(int argc, char *argv[], char **envp)
+void	remove_arg(t_env_list *prev, t_env_list *env)
 {
-	t_env_list	*next;
+	if (env == data()->env_list)
+	{
+		data()->env_list = env->next;
+		free(env);
+		env = data()->env_list;
+		prev = env;
+	}
+	else
+	{
+		prev->next = env->next;
+		free(env->name);
+		free(env->value);
+		free(env);
+		env = prev->next;
+	}
+}
+
+void	ft_unset_singal(char **argv, t_env_list *prev, t_env_list *env, int i)
+{
+	while (env != NULL)
+	{
+		if (strcmp(argv[i], env->name) == 0)
+			remove_arg(prev, env);
+		else
+		{
+			prev = env;
+			env = env->next;
+		}
+	}
+}
+
+int	ft_unset(char *argv[])
+{
+	t_env_list	*prev;
 	t_env_list	*tmp_env;
 	int			i;
 
 	i = 1;
-	tmp_env = data()->env_list;
 	while (argv[i])
 	{
-		if (!is_valid_name(argv[i]))
+		tmp_env = data()->env_list;
+		prev = tmp_env;
+		if (strcmp(argv[i], " ") && !is_valid_name(argv[i]))
 		{
-			err_handle(2, "unset", argv[i]);
+			err_handle(2, "unset: ", ft_strjoin2(argv[i], ": ", 0));
 			data()->exit_state = 1;
 		}
-		if ((strcmp(argv[i], tmp_env->value) == 0))
-			data()->env_list = tmp_env->next;
-		while (tmp_env != NULL)
-		{
-			next = tmp_env->next;
-			if (next != NULL && ((strcmp(argv[i], next->name)) == 0))
-				tmp_env->next = next->next;
-			tmp_env = tmp_env->next;
-		}
+		ft_unset_singal(argv, prev, tmp_env, i);
 		i++;
 	}
 	return (data()->exit_state);

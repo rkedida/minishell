@@ -6,72 +6,66 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:16:02 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/03 16:34:14 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:06:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_io_modifier(int type)
-{
-	if (type == LESS || type == LESS_LESS
-		|| type == GREATER || type == GREATER_GREATER)
-		return (true);
-	return (false);
-}
-
-int	init_cmd_struct(t_simple_cmd **simple_cmd)
-{
-	*simple_cmd = malloc(sizeof(t_simple_cmd));
-	if (*simple_cmd == NULL)
-		return (2);
-	(*simple_cmd)->cmd = NULL;
-	(*simple_cmd)->args = NULL;
-	(*simple_cmd)->next = NULL;
-	(*simple_cmd)->infile = NULL;
-	(*simple_cmd)->outfile = NULL;
-	(*simple_cmd)->heredocs = NULL;
-	(*simple_cmd)->error = false;
-	return (0);
-}
-
-int	add_args(t_args **args, char *value)
-{
-	while (*args != NULL)
-		args = &(*args)->next;
-	*args = malloc(sizeof(t_args));
-	if (*args == NULL)
-		return (2);
-	(*args)->value = value;
-	(*args)->next = NULL;
-	return (0);
-}
-
 int	parse_redir(t_simple_cmd *cmd, t_token *token)
 {
 	int	last_op;
-	int	res;
 
-	res = 0;
 	last_op = 0;
 	while (token != NULL && token->type != PIPE)
 	{
-		if (is_io_modifier(token->type))
+		if (is_io_mod(token->type))
 			last_op = token->type;
 		if (token->type == REDIR)
 		{
 			if (last_op == LESS || last_op == LESS_LESS)
-			{
-				if (add_infiles(&(cmd->infile), token->value, last_op) != 0)
-					token->error = true;
-			}
+				ft_handel_in(cmd, token, last_op);
 			else if (last_op == GREATER || last_op == GREATER_GREATER)
-				res = add_outfiles(&(cmd->outfile), token->value, last_op);
+				add_outfiles(&(cmd->outfile), token->value, last_op);
 			last_op = 0;
 		}
 		token = token->next;
 	}
 	return (0);
+}
+
+t_token	*get_next_word(t_token *token)
+{
+	if (!token)
+		return (NULL);
+	token = token->next;
+	while (token && token->type != WORD && token->type != PIPE)
+		token = token->next;
+	return (token);
+}
+
+void	set_cmd_err(t_simple_cmd *simple_cmd, t_token *token)
+{
+	if (token->error)
+	{
+		simple_cmd->error = true;
+		simple_cmd->err_code = token->err_code;
+	}
+}
+
+void	ft_set_cmd(t_simple_cmd *simple_cmd, t_token *token)
+{
+	set_cmd_err(simple_cmd, token);
+	if (token->type == WORD && simple_cmd->cmd == NULL)
+	{
+		simple_cmd->cmd = ft_strdup(token->value);
+		set_cmd_err(simple_cmd, token);
+	}
+	if (token->type == WORD || (token->type == SPACE && simple_cmd->args
+			&& simple_cmd->args->next && get_next_word(token)
+			&& get_next_word(token)->type == WORD))
+		add_args(&(simple_cmd->args),
+			ft_strdup(token->value), token->type);
 }
 
 int	parse(void)
@@ -86,14 +80,13 @@ int	parse(void)
 	{
 		while (token && token->type != PIPE)
 		{
-			if (token->error)
-				simple_cmd->error = true;
-			if (token->type == WORD && simple_cmd->cmd == NULL)
-				simple_cmd->cmd = token->value;
-			if (token->type == WORD)
-				add_args(&(simple_cmd->args), token->value);
+			ft_set_cmd(simple_cmd, token);
 			token = token->next;
 		}
+		if (token && token->type == PIPE)
+			set_cmd_err(simple_cmd, token);
+		if (simple_cmd->cmd && !*simple_cmd->cmd)
+			err_handle(1, ": ", ":");
 		if (!token)
 			break ;
 		init_cmd_struct(&(simple_cmd->next));
