@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:16:02 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 18:06:27 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/27 19:48:37 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,13 @@ int	parse(void)
 		}
 		if (token && token->type == PIPE)
 			set_cmd_err(simple_cmd, token);
-		if (simple_cmd->cmd && !*simple_cmd->cmd)
-			err_handle(1, ": ", ":");
+		if (simple_cmd->cmd && (!*simple_cmd->cmd || !ft_strcmp(simple_cmd->cmd, "..") || !ft_strcmp(simple_cmd->cmd, ".")))
+		{
+			data()->cmds->error = true;
+			data()->cmds->err_code = 1;
+			data()->exit_state = 127;
+			return (err_handle(1, simple_cmd->cmd, ": "));
+		}
 		if (!token)
 			break ;
 		init_cmd_struct(&(simple_cmd->next));

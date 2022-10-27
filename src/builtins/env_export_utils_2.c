@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:25:53 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 16:31:53 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:03:41 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ int	env_len(t_env_list *ls)
 	int	len;
 
 	len = 0;
-	while (ls && ls->next && ++len)
+	while (ls)
+	{
+		len++;
 		ls = ls->next;
+	}
 	return (len);
 }
 

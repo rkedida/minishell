@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   param_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:27:43 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 03:51:04 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:46:06 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,9 @@ char	*expand_single(char *value, int var_pos, char *var)
 	return (var);
 }
 
-void	replace_placeholders(void)
-{
-	t_token	*token;
-
-	token = data()->tokens;
-	while (token)
-	{
-		if (token->type == TOKEN && ft_strchr(token->value, PLACEHOLDER))
-			*(ft_strchr(token->value, PLACEHOLDER)) = DOLLAR;
-		if (!ft_strchr(token->value, PLACEHOLDER))
-			token = token->next;
-	}
-}
-
 void	param_expand(void)
 {
 	t_token	*token;
-	char	*exp;
 	char	*var;
 	int		var_pos;
 
@@ -78,11 +63,7 @@ void	param_expand(void)
 		var = ft_strchr(token->value, DOLLAR);
 		var_pos = ft_strchr_pos(token->value, DOLLAR);
 		if (var && paramlen(var + 1) != 0 && token->expansion)
-		{
-			exp = expand_single(token->value, var_pos, var);
-			free(token->value);
-			token->value = exp;
-		}
+			token->value = expand_single(token->value, var_pos, var);
 		if (!token->expansion || !ft_strchr(token->value, DOLLAR)
 			|| paramlen(ft_strchr(token->value, DOLLAR) + 1) == 0)
 			token = token->next;

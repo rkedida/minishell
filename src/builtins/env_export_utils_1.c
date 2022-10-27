@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:46:40 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 16:37:20 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:22:08 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_env(char **envp)
 	if (init_env_list(&tmp_env))
 		return ;
 	if (!*envp)
-		*envp = "PATH=/";
+		envp = ft_split("PATH=/", ':');
 	while (*envp)
 	{
 		split = ft_split(*envp, '=');
@@ -103,7 +103,7 @@ t_env_list	*ft_getenv_list(char *name)
 	tmp_env = data()->env_list;
 	while (tmp_env != NULL)
 	{
-		if ((strcmp(name, tmp_env->name)) == 0)
+		if ((ft_strcmp(name, tmp_env->name)) == 0)
 			return (tmp_env);
 		tmp_env = tmp_env->next;
 	}

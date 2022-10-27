@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:28 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 07:46:05 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:22:15 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,15 @@ static int	update_env(char *argv[])
 	value = NULL;
 	while (++argv && *argv)
 	{
-		if (**argv && strcmp(*argv, " ") != 0)
+		if (**argv && ft_strcmp(*argv, " ") != 0)
 		{
 			set_name_value(&name, &value, argv);
 			if (!is_valid_name(name))
-				err_handle(2, "export:", ft_strjoin2(name, ": ", 0));
+			{
+				err_handle(2, "export: ", name);
+				free(name);
+				free(value);
+			}
 			else
 				add_env(name, value);
 		}
@@ -110,6 +114,7 @@ int	ft_export(int argc, char *argv[])
 	{
 		env_arr = env_to_arr();
 		print_env_or_export("export", env_arr);
+		free_dp(env_arr);
 	}
 	return (0);
 }

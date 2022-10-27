@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:45:57 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 03:22:07 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:33:05 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int	creat_heredocs(char *dlmtr, int expantion, char *heredoc)
 	line = NULL;
 	fd = open(heredoc, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	data()->state = 2;
-	line = readline("> ");
+	get_user_input(&line);
 	if (data()->state == 0 && close(fd) != 99)
 		return (-1);
-	while (line && strcmp(line, dlmtr))
+	while (line && ft_strcmp(line, dlmtr))
 	{
 		if (expantion != '"' && expantion != '\'')
 			line = heredoc_expand(line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
-		line = readline("> ");
+		get_user_input(&line);
 	}
 	if (line)
 		free(line);
@@ -64,7 +64,11 @@ int	read_heredocs(char	*dlmtr, int expantion)
 	tmp = ft_itoa(data()->n_heredocs);
 	heredoc = ft_strjoin2(tmp, "heredoc", 1);
 	if (creat_heredocs(dlmtr, expantion, heredoc) == -1)
+	{
+		free(heredoc);
 		return (-1);
+	}
+	free(heredoc);
 	fd = open(heredoc, O_RDONLY);
 	return (fd);
 }
@@ -82,7 +86,7 @@ int	add_infiles(t_infiles **infile, char *file, int mode, int expantion)
 		(*infile)->value = open(file, O_RDONLY);
 		if ((*infile)->value == -1)
 		{
-			err_handle(3, "", ft_strjoin2(file, ": ", 0));
+			err_handle(3, " ", ft_strjoin2(file, ": ", 0));
 			data()->exit_state = 1;
 			return (3);
 		}

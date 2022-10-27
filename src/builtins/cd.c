@@ -6,7 +6,7 @@
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:13:49 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/24 09:49:07 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:12:42 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	change_dir(int dir, char *path, char *oldpath)
 	dir = chdir(path);
 	if (dir == -1)
 	{
-		if (!strcmp(path, "?"))
-			err_handle(7, "cd: ", ft_strjoin2(" ", ": ", 0));
+		if (!ft_strcmp(path, "?"))
+			err_handle(7, "cd: ", " : ");
 		else
-			err_handle(3, "cd: ", ft_strjoin2(path, ": ", 0));
+			err_handle(7, "cd: ", path);
 		data()->exit_state = 1;
 	}
 	else
@@ -39,9 +39,9 @@ int	ft_cd(int argc, char **argv)
 	else if (argc == 1)
 		path = ft_strdup("~");
 	oldpath = getcwd(NULL, 0);
-	if (strcmp(path, "~") == 0)
+	if (ft_strcmp(path, "~") == 0)
 		path = ft_getenv("HOME");
-	if (strcmp(path, "-") == 0)
+	if (ft_strcmp(path, "-") == 0)
 	{
 		path = ft_getenv("OLDPWD");
 		if (path)

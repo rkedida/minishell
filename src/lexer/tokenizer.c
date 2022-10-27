@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:08:10 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 17:58:55 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/26 20:23:13 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	set_type(t_token *token, int flag)
 {
 	if (check_operators(*token->value))
 		token->type = OPERATOR;
-	else if (!strcmp(token->value, " ") && !flag)
+	else if (!ft_strcmp(token->value, " ") && !flag)
 		token->type = SPACE;
 	else
 		token->type = TOKEN;

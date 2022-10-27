@@ -3,31 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 22:07:05 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 17:46:45 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/27 04:23:13 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*init_t_token(void)
+void	get_user_input(char **buffer)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->value = NULL;
-	token->type = 0;
-	token->next = NULL;
-	token->split = false;
-	token->error = false;
-	token->err_code = 0;
-	token->expansion = 0;
-	token->quot = -1;
-	return (token);
+	if (!isatty(fileno(stdin)))
+		*buffer = ft_strtrim(get_next_line(fileno(stdin)), "\n", 1);
+	else
+		*buffer = readline("> ");
 }
 
 bool	quotes_matched(char *line)
@@ -93,7 +83,6 @@ int	lexer(char *user_input)
 	t_token	*token;
 	char	*quoted;
 
-	token = NULL;
 	token = init_t_token();
 	if (!token)
 		exit(1);
@@ -103,7 +92,7 @@ int	lexer(char *user_input)
 	while (!quotes_matched(user_input))
 	{
 		user_input = ft_strjoin2(user_input, "\n", 1);
-		quoted = readline("> ");
+		get_user_input(&quoted);
 		if (quoted)
 			user_input = ft_strjoin2(user_input, quoted, 1);
 		else

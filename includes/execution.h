@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:49:03 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 18:32:11 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/26 06:27:52 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-// # include <stdbool.h>
 
 enum e_exec_STATE
 {
@@ -50,7 +49,8 @@ int			ft_pwd(void);
 // int		ft_unset(int argc, char *argv[], char *envp[]);
 int			ft_echo(int argc, char **argv);
 int			ft_exit(int argc, char **argv);
-int			exec_builtin(t_simple_cmd *simple_cmd);
+int			exec_builtin1(t_simple_cmd *simple_cmd);
+int			exec_builtin2(t_simple_cmd *simple_cmd);
 int			child_process(t_simple_cmd *simple_cmd);
 
 int			is_valid_name(char *argv);

@@ -6,7 +6,7 @@
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 12:11:35 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/23 19:16:13 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 04:35:05 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
-char		*ft_strjoin2(char *s1, char *s2,int flag);
+char		*ft_strjoin2(char *s1, char *s2, int flag);
 char		*ft_strjoin_withnull(char *s1, char *s2, int flag);
 char		*ft_strtrim(char *s1, char const *set, int flag);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));

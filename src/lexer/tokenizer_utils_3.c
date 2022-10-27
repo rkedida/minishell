@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:55:14 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 17:59:04 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/27 04:23:33 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,23 @@ t_token	*get_redir_token(char **input)
 			token->value = ft_strdup("");
 	}
 	*input = ft_substr(*input, token->type, ft_strlen(*input) - token->type, 1);
+	return (token);
+}
+
+t_token	*init_t_token(void)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->value = NULL;
+	token->type = 0;
+	token->next = NULL;
+	token->split = false;
+	token->error = false;
+	token->err_code = 0;
+	token->expansion = 0;
+	token->quot = -1;
 	return (token);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:48:52 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 17:40:47 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/27 00:54:30 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	exec_cmd(t_simple_cmd *simple_cmd, int fd[4])
 		return (2);
 	if (is_builtin(simple_cmd->cmd) || (!ft_strcmp(simple_cmd->cmd, "export")
 			&& simple_cmd->args->next))
-		data()->exit_state = exec_builtin(simple_cmd);
+		data()->exit_state = exec_builtin1(simple_cmd);
 	else
 	{
 		ret = fork();
@@ -87,8 +87,9 @@ int	exec_cmd(t_simple_cmd *simple_cmd, int fd[4])
 			close(fd[IN]);
 			if (is_builtin2(simple_cmd->cmd))
 			{
-				data()->exit_state = exec_builtin(simple_cmd);
-				exit(0);
+				ret = exec_builtin2(simple_cmd);
+				free_all();
+				exit(ret);
 			}
 			else
 				child_process(simple_cmd);

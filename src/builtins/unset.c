@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:42 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 07:46:22 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:22:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ void	ft_unset_singal(char **argv, t_env_list *prev, t_env_list *env, int i)
 {
 	while (env != NULL)
 	{
-		if (strcmp(argv[i], env->name) == 0)
+		if (ft_strcmp(argv[i], env->name) == 0)
+		{
 			remove_arg(prev, env);
+			break ;
+		}
 		else
 		{
 			prev = env;
@@ -72,9 +75,9 @@ int	ft_unset(char *argv[])
 	{
 		tmp_env = data()->env_list;
 		prev = tmp_env;
-		if (strcmp(argv[i], " ") && !is_valid_name(argv[i]))
+		if (ft_strcmp(argv[i], " ") && !is_valid_name(argv[i]))
 		{
-			err_handle(2, "unset: ", ft_strjoin2(argv[i], ": ", 0));
+			err_handle(2, "unset: ", argv[i]);
 			data()->exit_state = 1;
 		}
 		ft_unset_singal(argv, prev, tmp_env, i);

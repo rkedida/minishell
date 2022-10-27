@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:36:34 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/24 22:33:13 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 19:36:52 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,20 @@ char	*prompt(void)
 {
 	char	*line;
 
-	line = NULL;
-	line = readline("minishell$");
+	usleep(500);
+	if (isatty(fileno(stdin)))
+		line = readline("minishell$ ");
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		line = ft_strtrim(line, "\n", 1);
+	}
 	return (line);
 }
 
 int	end_session(void)
 {
-	// change_ctrlc_sym(true);
-	// mem_free_all();
-	// rl_clear_history();
+	rl_clear_history();
 	print_exit();
 	free_env(data()->env_list);
 	return (data()->exit_state);
@@ -41,15 +45,6 @@ int	refresh_session(char *envp[])
 	data()->cmds = NULL;
 	data()->n_heredocs = 0;
 	return (0);
-}
-
-void	handler()
-{
-	write (1, "\n", 1);
-	rl_free_line_state();
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 int	init_session(char *envp[])
@@ -68,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	input = NULL;
 	init_session(envp);
 	if (argc > 1)
-		printf("%s is ignored\n", argv[0]);
+		printf("%s ... are ignored\n", argv[1]);
 	while (true)
 	{
 		refresh_session(envp);
@@ -79,7 +74,6 @@ int	main(int argc, char **argv, char **envp)
 				add_history(input);
 			if (lexer(ft_strdup(input)) != 6 && !parse())
 				xecute();
-			data()->state = 0;
 			free_tokens(data()->tokens);
 			free_cmds(data()->cmds);
 		}

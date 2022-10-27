@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:21 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 07:45:43 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:22:58 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,30 @@ void	print_exit(void)
 		printf("exit\n");
 }
 
-void	ft_exit_helper(char **argv)
+int	ft_exit_helper(char **argv)
 {
 	int	i;
 
 	i = 0;
+	if (ft_isdigit(argv[1][i]) || argv[1][i] == '+' || argv[1][i] == '-')
+		i++;
 	while (argv[1][i])
 	{
-		if (i == 0 && (ft_isdigit(argv[1][i])
-			|| argv[1][0] == '+' || argv[1][0] == '-'))
-			i++;
-		else if (!ft_isdigit(argv[1][i]))
+		if (!ft_isdigit(argv[1][i]))
 		{
 			print_exit();
-			err_handle(5, "exit: ", "numeric argument required: ");
-			exit(255);
+			err_handle(5, "exit: ", "numeric argument required");
+			return (255);
 		}
-		else
-			i++;
+		i++;
 	}
 	if (i == 0)
 	{
 		print_exit();
-		err_handle(5, "exit: ", "numeric argument required: ");
-		exit(255);
+		err_handle(5, "exit: ", "numeric argument required");
+		return (255);
 	}
+	return (0);
 }
 
 int	ft_exit(int argc, char **argv)
@@ -50,18 +49,24 @@ int	ft_exit(int argc, char **argv)
 	if (argc > 2)
 	{
 		print_exit();
-		err_handle(5, "exit: ", "too many arguments: ");
+		write(2, "minishell: exit: too many arguments\n", 36);
+		data()->exit_state = 1;
 	}
-	if (argc >= 2)
+	else if (argc >= 2)
 	{
-		ft_exit_helper(argv);
+		if (ft_exit_helper(argv))
+		{
+			free(argv);
+			free_all();
+			exit (255);
+		}
 		print_exit();
-		exit(ft_atoi(argv[1]));
+		return (ft_atoi(argv[1]));
 	}
 	else
 	{
 		print_exit();
-		exit(data()->exit_state);
+		return (data()->exit_state);
 	}
 	return (data()->exit_state);
 }

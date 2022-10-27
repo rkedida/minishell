@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 14:36:48 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 18:53:03 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/27 04:22:40 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	check_syntax_helper2(t_token *token, int mod)
 	if (mod == 1)
 		return (data()->exit_state);
 	else if (mod == 2)
-		return (err_handle(4, "", token->value));
+		return (err_handle(4, " ", token->value));
 	else
 	{
 		token->err_code = 4;
-		return (err_handle(4, "", ft_strjoin2(token->value, ": ", 0)));
+		return (err_handle(4, " ", token->value));
 	}
 }
 
@@ -48,9 +48,6 @@ static int	check_syntax_helper(void)
 	token = data()->tokens;
 	while (token && ++args)
 	{
-		if (args == 1 && (token->type == LESS || token->type == GREATER
-				|| token->type == GREATER_GREATER || token->type == LESS_LESS))
-			return (check_syntax_helper2(token, 1));
 		if ((args == 1 && token->type != WORD && token->type != SPACE
 				&& !is_redir(token)) || (args == 1 && !token->next
 				&& token->type != WORD))
@@ -71,19 +68,20 @@ int	check_syntax(void)
 	check_syntax_helper();
 	while (token)
 	{
-		if (is_redir(token) && get_next_token(token)
-			&& get_next_token(token)->type != REDIR)
+		if (is_redir(token) && ((get_next_token(token) \
+			&& get_next_token(token)->type != REDIR) || !get_next_token(token)))
 		{
 			token->error = true;
 			token->err_code = 6;
-			return (err_handle(6, "", ft_strjoin2(token->value, "", 0)));
+			data()->exit_state = 2;
+			return (err_handle(6, " ", token->value));
 		}
 		else if ((is_redir(token) && get_next_token(token)
 				&& is_redir(get_next_token(token))))
 		{
 			token->error = true;
 			token->err_code = 4;
-			return (err_handle(4, "", ft_strjoin2(token->value, ": ", 0)));
+			return (err_handle(4, " ", token->value));
 		}
 		token = token->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:36 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/23 00:15:16 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/26 06:43:59 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 int	ft_pwd(void)
 {
 	char	*path;
+	int		ret;
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		return (err_handle(1, "pwd: ", ft_strjoin2(path, ": ", 0)));
+	{
+		ret = err_handle(1, "pwd: ", path);
+		free(path);
+		return (ret);
+	}
 	printf("%s\n", path);
 	free(path);
-	exit(0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/12 12:38:50 by rkedida           #+#    #+#              #
-#    Updated: 2022/10/25 18:48:17 by rkedida          ###   ########.fr        #
+#    Updated: 2022/10/27 19:55:50 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,18 @@ HEADERS 	= $(shell find ./includes -name "*.h")
 LIBFT		= ./libft/libft.a
 
 OBJECTS 	= $(patsubst %.c, %.o, $(SOURCES))
+#DEPENDS 	= $(patsubst %.c, %.d, $(SOURCES))
 
-CFLAGS 		= -g
+CC		= gcc
+CFLAGS 		= -g #-Wall -Wextra -Werror -g
 RLFLAGS 	= -lreadline
 
 all: $(NAME)
 
 %.o: %.c
-# @$(CC) -Iincludes $(CFLAGS) -MMD -MP -c $< -o $@
+#	@$(CC) -Iincludes $(CFLAGS) -MMD -MP -c $< -o $@
 	@$(CC) -Iincludes $(CFLAGS) -c $< -o $@
-	
+
 $(NAME): $(OBJECTS)
 	@make -C ./libft --silent
 	@echo "Dependencies Compiled !"
@@ -47,7 +49,7 @@ test:
 	@$(shell ./esh_tester.sh)
 
 git:
-	@git add .
+	@git add . -f
 	-@git commit -m "Update!"
 	@git push
 	@echo "Commited!"
@@ -59,4 +61,4 @@ re: clean all
 
 .PHONY: re run fclean clean all
 
-# -include $(DEPENDS)
+#-include $(DEPENDS)

@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 22:14:12 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/26 02:18:50 by kfergani         ###   ########.fr       */
+/*   Created: 2022/05/01 22:56:37 by kfergani          #+#    #+#             */
+/*   Updated: 2022/10/25 21:33:35 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int	ft_env(int argc)
-{
-	if (argc == 1)
-	{
-		print_env_or_export("env", NULL);
-		return (0);
-	}
-	return (1);
-}
+# include <stdlib.h>
+# include <sys/types.h>
+# include <unistd.h>
+# include <limits.h>
+# include <fcntl.h>
+# include "minishell.h"
 
-char	*ft_getenv(char *name)
-{
-	t_env_list	*tmp_env;
+# define BUFFER_SIZE 1
 
-	tmp_env = ft_getenv_list(name);
-	if (tmp_env && tmp_env->value)
-		return (ft_strdup(tmp_env->value));
-	return (ft_strdup(""));
-}
+char	*get_next_line(int fd);
+int		ft_new_line(char *s);
+void	ft_copy(char *dest, char *src, int size);
+char	*init_buffer(size_t size, char *buffer);
+char	*ft_append(char	*dest, char	*src);
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_child.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:37:53 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 05:43:16 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:13:03 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,41 +20,49 @@ void	child_exit(int signum)
 	exit(130);
 }
 
-int	exec_builtin(t_simple_cmd *simple_cmd)
+int	exec_builtin1(t_simple_cmd *simple_cmd)
 {
 	int		res;
 	int		argc;
 	char	**argv;
-	char	**env;
 
 	res = 0;
-	env = env_to_arr();
 	argc = init_args(simple_cmd, &argv, 0);
 	if (ft_strcmp(argv[0], "cd") == 0)
 		res = ft_cd(argc, argv);
-	else if (ft_strcmp(argv[0], "echo") == 0)
+	else if (ft_strcmp(argv[0], "unset") == 0)
+		res = ft_unset(argv);
+	else if (ft_strcmp(argv[0], "exit") == 0)
+	{
+		res = ft_exit(argc, argv);
+		free(argv);
+		free_all();
+		exit(res);
+	}
+	else if (ft_strcmp(argv[0], "export") == 0)
+		res = ft_export(argc, argv);
+	free(argv);
+	return (res);
+}
+
+int	exec_builtin2(t_simple_cmd *simple_cmd)
+{
+	int		res;
+	int		argc;
+	char	**argv;
+
+	res = 0;
+	argc = init_args(simple_cmd, &argv, 0);
+	if (ft_strcmp(argv[0], "echo") == 0)
 		res = ft_echo(argc, argv);
 	else if (ft_strcmp(argv[0], "env") == 0)
 		res = ft_env(argc);
 	else if (ft_strcmp(argv[0], "export") == 0)
 		res = ft_export(argc, argv);
-	else if (ft_strcmp(argv[0], "unset") == 0)
-		res = ft_unset(argv);
 	else if (ft_strcmp(argv[0], "pwd") == 0)
 		res = ft_pwd();
-	else if (ft_strcmp(argv[0], "exit") == 0)
-		res = ft_exit(argc, argv);
+	free(argv);
 	return (res);
-}
-
-void	free_dp(char **i)
-{
-	while (*i)
-	{
-		free(*i);
-		*i = NULL;
-		i++;
-	}
 }
 
 void	handel_child_error(t_simple_cmd *cmd, char **path, char **env, int res)
@@ -62,11 +70,12 @@ void	handel_child_error(t_simple_cmd *cmd, char **path, char **env, int res)
 	if (res)
 	{
 		if (res == 1)
-			err_handle(8, *path, "");
+			err_handle(8, *path, " ");
 		else
-			err_handle(1, "", ft_strjoin2(cmd->cmd, ": ", 0));
+			err_handle(1, " ", cmd->cmd);
 		free_dp(path);
 		free_dp(env);
+		free_all();
 		exit (127);
 	}
 }
@@ -91,7 +100,9 @@ int	child_process(t_simple_cmd *simple_cmd)
 		path++;
 	free_dp(path);
 	free_dp(env);
+	free(args);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
+	free_all();
 	exit (res);
 }

@@ -6,7 +6,7 @@
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:14:00 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 06:04:39 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:51:06 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	ft_echo(int argc, char **argv)
 	if (argc == 1)
 	{
 		printf("\n");
-		exit (0);
+		return (0);
 	}
 	while (argv[i] && check_flag(argv[i]))
 		i++;
 	if (i > 1)
 		n_flag = true;
 	echo_print(n_flag, &(argv[i]));
-	exit(0);
+	return (0);
 }

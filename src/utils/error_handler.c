@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:09:28 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/25 18:16:41 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/10/26 22:49:54 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	err_handle(int error_code, char *prog, char *error_input)
 {
 	char	*err[9];
 
-	err[0] = "missing ]";
-	err[1] = "command not found";
-	err[2] = "not an valid identifier";
-	err[3] = "No such file or directory";
-	err[4] = "syntax error near unexpected token";
-	err[5] = "syntax error near unexpected token 'newline'";
-	err[6] = "syntax error near unexpected token";
-	err[7] = "Not a directory";
-	err[8] = "is a directory";
+	err[0] = " missing ]";
+	err[1] = " command not found";
+	err[2] = " not an valid identifier";
+	err[3] = " No such file or directory";
+	err[4] = " syntax error near unexpected token";
+	err[5] = " syntax error near unexpected token 'newline'";
+	err[6] = " syntax error near unexpected token";
+	err[7] = " Not a directory";
+	err[8] = " is a directory";
 	return (err_handle_helper(error_code, prog, error_input, err));
 }

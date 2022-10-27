@@ -6,7 +6,7 @@
 /*   By: kfergani <kfergani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 18:55:12 by rkedida           #+#    #+#             */
-/*   Updated: 2022/10/24 22:34:00 by kfergani         ###   ########.fr       */
+/*   Updated: 2022/10/27 04:32:23 by kfergani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 char	*ft_strjoin2(char *s1, char *s2, int flag)
 {
-	unsigned int	index;
 	char			*dst;
 
-	index = 0;
 	if (s1 == 0 || s2 == 0)
 		return (0);
 	dst = malloc(sizeof(*dst) * (ft_strlen(s1) + ft_strlen(s2) + 1));
@@ -40,6 +38,7 @@ char	*ft_strjoin_withnull(char *s1, char *s2, int flag)
 	char	*ret;
 	char	*cp_ret;
 	char	*cp_s;
+	int		i;
 
 	if (s2 == NULL)
 		return (ft_strdup(s1));
@@ -50,7 +49,7 @@ char	*ft_strjoin_withnull(char *s1, char *s2, int flag)
 		return (NULL);
 	cp_ret = ret;
 	cp_s = s1;
-	int	i = 0;
+	i = 0;
 	while (cp_s[i])
 	{
 		*cp_ret++ = cp_s[i];
