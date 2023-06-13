@@ -13,9 +13,10 @@ It's a recreation of a tiny bit of bash shell functionality.
 
 4. [Builtins](#Builtins)
 
-5. [Contributing](#Contributing)
+5. [Contributors](#Contributors)
 
-6. [License](#License)
+6. [Contributing](#Contributing)
+
 
 ## Introduction
 
