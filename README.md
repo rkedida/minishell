@@ -1,4 +1,4 @@
-# MiniShell by Kfergani and Rkedida
+# minishell
 MiniShell is a simple shell created as a learning project to understand processes and file descriptors in C programming language.
   
 It's a recreation of a tiny bit of bash shell functionality.
@@ -72,6 +72,13 @@ unset with no options
 env with no options or arguments
 
 exit with no options
+
+## Contributors
+This project was completed by:
+Kheireddine Fergani @khirooo
+
+Robel Kedida @robelkedida
+
 
 ## Contributing
 Contributions are welcome. Please open an issue or submit a pull request for any bugs/improvements.
