@@ -1,5 +1,3 @@
-# minishell
-
 # MiniShell by Kfergani and Rkedida
 MiniShell is a simple shell created as a learning project to understand processes and file descriptors in C programming language.
   
